@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="model.FirefighterBoardTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2025-11-07T09:29:12" hostname="EL--BARSA99-PC" time="0.106">
+  <properties/>
+  <testcase name="testColumnCount()" classname="model.FirefighterBoardTest" time="0.071"/>
+  <testcase name="testGetState_afterSet()" classname="model.FirefighterBoardTest" time="0.012"/>
+  <testcase name="testRowCount()" classname="model.FirefighterBoardTest" time="0.001"/>
+  <testcase name="testStepNumber()" classname="model.FirefighterBoardTest" time="0.016"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
