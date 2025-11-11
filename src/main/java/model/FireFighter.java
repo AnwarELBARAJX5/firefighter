@@ -11,7 +11,7 @@ public class FireFighter extends AbstractAgent{
     }
     @Override
     public void update(BoardContext context) {
-        Position newFirefighterPosition = targetStrategy.neighborClosestToFire(this.position,context.getFirePositions(), context::getNeighbors);
+        Position newFirefighterPosition = targetStrategy.neighborClosestToFire(this.position,context.getFirePositions(), context.getNeighborsMap());
         this.position=newFirefighterPosition;
         context.extinguish(this.position);
         List<Position> neighbors=context.getNeighbors(this.position);

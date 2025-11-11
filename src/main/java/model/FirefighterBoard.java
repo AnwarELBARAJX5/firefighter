@@ -144,5 +144,8 @@ public class FirefighterBoard implements Board<List<ModelElement>>{
       }
     }
   }
+  public Map<Position, List<Position>> getNeighborsMap() {
+    return this.neighbors; // Retournez simplement la map privée
+  }
 
 }
