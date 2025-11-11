@@ -6,7 +6,7 @@ import java.util.*;
 
 public class FireFighter extends AbstractAgent{
     private final TargetStrategy targetStrategy = new TargetStrategy();
-    public Firefighter(Position startPosition) {
+    public FireFighter(Position startPosition) {
         super(startPosition);
     }
     @Override
