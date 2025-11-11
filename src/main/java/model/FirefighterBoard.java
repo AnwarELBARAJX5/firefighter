@@ -130,10 +130,9 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
 
   @Override
   public void setState(List<ModelElement> state, Position position) {
-    fires.remove(position);
-    for (; ; ) {
-      if (!firefighters.remove(position)) break;
-    }
+    fires.removeIf(fire -> fire.getPosition().equals(position));
+    firefighters.removeIf(ff -> ff.getPosition().equals(position));
+
     for (ModelElement element : state) {
       switch (element) {
         case FIRE -> fires.add(new Fire(position));
