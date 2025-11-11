@@ -5,7 +5,7 @@ import util.TargetStrategy;
 import java.util.*;
 
 
-public class FirefighterBoard implements Board<List<ModelElement>> {
+public class FirefighterBoard implements Board<List<ModelElement>>{
   private final int columnCount;
   private final int rowCount;
   private final int initialFireCount;
@@ -144,4 +144,5 @@ public class FirefighterBoard implements Board<List<ModelElement>> {
       }
     }
   }
+
 }
