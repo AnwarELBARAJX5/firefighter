@@ -6,7 +6,6 @@ import java.util.*;
 
 
 public interface BoardContext {
-	public List<Position> update();
 	public int stepNumber();
 	List<Position> getNeighbors(Position p);
 	public Map<Position, List<Position>> getNeighborsMap() ;
