@@ -49,7 +49,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
       firefighters.add(new FireFighter(randomPosition()));
   }
 
-  private Position randomPosition() {
+  public Position randomPosition() {
     return new Position(randomGenerator.nextInt(rowCount), randomGenerator.nextInt(columnCount));
   }
 

@@ -14,5 +14,6 @@ public interface BoardContext {
 	public void  createFire(Position position);
 	public int rowCount();
 	public int columnCount();
+	public Position randomPosition();
 
 }
