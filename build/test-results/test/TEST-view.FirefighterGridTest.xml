@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="view.FirefighterGridTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2025-11-07T09:29:12" hostname="EL--BARSA99-PC" time="0.511">
-  <properties/>
-  <testcase name="testColumnCount()" classname="view.FirefighterGridTest" time="0.508"/>
-  <testcase name="testRowCount()" classname="view.FirefighterGridTest" time="0.001"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
