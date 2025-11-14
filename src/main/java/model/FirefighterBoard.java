@@ -10,8 +10,10 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   private final int rowCount;
   private final int initialFireCount;
   private final int initialFirefighterCount;
+  private final int initialCloudCount;
   private List<FireFighter> firefighters;
   private Set<Fire> fires;
+  private List<Cloud> clouds;
   private Set<Position> firesToCreate;
   private Set<Position> firesToExtinguish;
   private Map<Position, List<Position>> neighbors = new HashMap();
@@ -19,7 +21,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   private int step = 0;
   private final Random randomGenerator = new Random();
 
-  public FirefighterBoard(int columnCount, int rowCount, int initialFireCount, int initialFirefighterCount) {
+  public FirefighterBoard(int columnCount, int rowCount, int initialFireCount, int initialFirefighterCount,int initialCloudCount) {
     this.columnCount = columnCount;
     this.rowCount = rowCount;
     this.positions = new Position[rowCount][columnCount];
@@ -37,6 +39,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
       }
     this.initialFireCount = initialFireCount;
     this.initialFirefighterCount = initialFirefighterCount;
+    this.initialCloudCount=initialCloudCount;
     initializeElements();
   }
 
@@ -47,6 +50,8 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
       fires.add(new Fire(randomPosition()));
     for (int index = 0; index < initialFirefighterCount; index++)
       firefighters.add(new FireFighter(randomPosition()));
+    for (int index = 0; index < initialCloudCount; index++)
+      clouds.add(new Cloud(randomPosition()));
   }
 
   public Position randomPosition() {
@@ -65,6 +70,12 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
     for (Fire fire : fires) {
       if (fire.getPosition().equals(position)) {
         result.add(ModelElement.FIRE);
+        break;
+      }
+    }
+    for (Cloud cloud : clouds) {
+      if (cloud.getPosition().equals(position)) {
+        result.add(ModelElement.CLOUD);
         break;
       }
     }
@@ -90,6 +101,12 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
       ff.update(this);
       modifiedPositions.add(oldPos);
       modifiedPositions.add(ff.getPosition());
+    }
+    for (Cloud cloud : clouds) {
+      Position oldPos = cloud.getPosition();
+      cloud.update(this);
+      modifiedPositions.add(oldPos);
+      modifiedPositions.add(cloud.getPosition());
     }
 
 
@@ -131,11 +148,13 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   public void setState(List<ModelElement> state, Position position) {
     fires.removeIf(fire -> fire.getPosition().equals(position));
     firefighters.removeIf(ff -> ff.getPosition().equals(position));
+    clouds.removeIf(cloud -> cloud.getPosition().equals(position));
 
     for (ModelElement element : state) {
       switch (element) {
         case FIRE -> fires.add(new Fire(position));
         case FIREFIGHTER -> firefighters.add(new FireFighter(position));
+        case CLOUD -> clouds.add(new Cloud(position));
       }
     }
   }
