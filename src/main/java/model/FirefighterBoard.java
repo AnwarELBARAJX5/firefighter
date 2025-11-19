@@ -16,6 +16,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   private final List<AbstractAgent> agentsToAdd = new ArrayList<>();
   private final List<AbstractAgent> agentsToRemove = new ArrayList<>();
   private final Set<Position> firePositions = new HashSet<>();
+  private final Set<Position> fireToCreate = new HashSet<>();
   private Map<Position, List<Position>> neighbors = new HashMap();
   private final Position[][] positions;
   private int step = 0;
@@ -84,6 +85,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
 
   public List<Position> updateToNextGeneration() {
     List<Position> modifiedPositions = new ArrayList<>();
+    fireToCreate.clear();
     agentsToAdd.clear();
     agentsToRemove.clear();
     for (AbstractAgent agent : agents) {
@@ -130,9 +132,10 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   }
   @Override
   public void createFire(Position position) {
-    if (!firePositions.contains(position)) {
+    if (!firePositions.contains(position) && !fireToCreate.contains(position)) {
       AbstractAgent newFire = new Fire(position);
       agentsToAdd.add(newFire);
+      fireToCreate.add(position);
     }
   }
 
