@@ -46,11 +46,17 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
     agents.clear();
     firePositions.clear();
     for (int index = 0; index < initialFireCount; index++)
-      agents.add(new Fire(randomPosition()));
+      addAgent(new Fire(randomPosition()));
     for (int index = 0; index < initialFirefighterCount; index++)
-      agents.add(new FireFighter(randomPosition()));
+      addAgent(new FireFighter(randomPosition()));
     for (int index = 0; index < initialCloudCount; index++)
-      agents.add(new Cloud(randomPosition()));
+      addAgent(new Cloud(randomPosition()));
+  }
+  private void addAgent(AbstractAgent agent) {
+    agents.add(agent);
+    if (agent instanceof Fire) {
+      firePositions.add(agent.getPosition());
+    }
   }
 
   public Position randomPosition() {
@@ -93,38 +99,29 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
 
   public List<Position> updateToNextGeneration() {
     List<Position> modifiedPositions = new ArrayList<>();
-    firesToCreate = new HashSet<>();
-    firesToExtinguish = new HashSet<>();
-    for (FireFighter ff : firefighters) {
-      Position oldPos = ff.getPosition();
-      ff.update(this);
-      modifiedPositions.add(oldPos);
-      modifiedPositions.add(ff.getPosition());
-    }
-    for (Cloud cloud : clouds) {
-      Position oldPos = cloud.getPosition();
-      cloud.update(this);
-      modifiedPositions.add(oldPos);
-      modifiedPositions.add(cloud.getPosition());
-    }
-
-
-    for (Fire fire : new HashSet<>(fires)) {
-      fire.update(this);
-    }
-    fires.removeIf(fire -> firesToExtinguish.contains(fire.getPosition()));
-    modifiedPositions.addAll(firesToExtinguish);
-    Set<Position> currentFirePos = getFirePositions();
-    for (Position pos : firesToCreate) {
-      if (!currentFirePos.contains(pos)) {
-        fires.add(new Fire(pos));
-        modifiedPositions.add(pos);
+    agentsToAdd.clear();
+    agentsToRemove.clear();
+    for (AbstractAgent agent : agents) {
+      Position oldPos = agent.getPosition();
+      agent.update(this);
+      if (!agent.getPosition().equals(oldPos)) {
+        modifiedPositions.add(oldPos);
+        modifiedPositions.add(agent.getPosition());
       }
     }
-
+    agents.removeAll(agentsToRemove);
+    agents.addAll(agentsToAdd);
+    firePositions.clear();
+    for (AbstractAgent agent : agents) {
+      if (agent instanceof Fire) firePositions.add(agent.getPosition());
+    }
+    for (AbstractAgent a : agentsToAdd) modifiedPositions.add(a.getPosition());
+    for (AbstractAgent a : agentsToRemove) modifiedPositions.add(a.getPosition());
     step++;
-    return new ArrayList<>(modifiedPositions);
+    return modifiedPositions;
   }
+
+
 
 
   @Override
@@ -138,9 +135,13 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
     initializeElements();
   }
 
+  @Override
   public void extinguish(Position position) {
-    firesToExtinguish.add(position);
-  }
+    for (AbstractAgent agent : agents) {
+      if (agent.getPosition().equals(position) && agent instanceof Fire) {
+        agentsToRemove.add(agent);
+      }
+    }
   public void createFire(Position position) {firesToCreate.add(position);}
 
   @Override
