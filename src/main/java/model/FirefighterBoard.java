@@ -3,6 +3,7 @@ package model;
 import util.Position;
 import util.TargetStrategy;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
@@ -65,26 +66,10 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
 
   @Override
   public List<ModelElement> getState(Position position) {
-    List<ModelElement> result = new ArrayList<>();
-    for (FireFighter firefighter : firefighters) {
-      if (firefighter.getPosition().equals(position)) {
-        result.add(ModelElement.FIREFIGHTER);
-        break;
-      }
-    }
-    for (Fire fire : fires) {
-      if (fire.getPosition().equals(position)) {
-        result.add(ModelElement.FIRE);
-        break;
-      }
-    }
-    for (Cloud cloud : clouds) {
-      if (cloud.getPosition().equals(position)) {
-        result.add(ModelElement.CLOUD);
-        break;
-      }
-    }
-    return result;
+    return agents.stream()
+            .filter(a -> a.getPosition().equals(position))
+            .map(AbstractAgent::getType)
+            .collect(Collectors.toList());
   }
 
   @Override
@@ -142,22 +127,28 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
         agentsToRemove.add(agent);
       }
     }
-  public void createFire(Position position) {firesToCreate.add(position);}
+  }
+  @Override
+  public void createFire(Position position) {
+    if (!firePositions.contains(position)) {
+      AbstractAgent newFire = new Fire(position);
+      agentsToAdd.add(newFire);
+    }
+  }
 
   @Override
   public void setState(List<ModelElement> state, Position position) {
-    fires.removeIf(fire -> fire.getPosition().equals(position));
-    firefighters.removeIf(ff -> ff.getPosition().equals(position));
-    clouds.removeIf(cloud -> cloud.getPosition().equals(position));
-
-    for (ModelElement element : state) {
-      switch (element) {
-        case FIRE -> fires.add(new Fire(position));
-        case FIREFIGHTER -> firefighters.add(new FireFighter(position));
-        case CLOUD -> clouds.add(new Cloud(position));
+      agents.removeIf(a -> a.getPosition().equals(position));
+      firePositions.remove(position);
+      for (ModelElement element : state) {
+        switch (element) {
+          case FIRE -> addAgent(new Fire(position));
+          case FIREFIGHTER -> addAgent(new FireFighter(position));
+          case CLOUD -> addAgent(new Cloud(position));
+        }
       }
-    }
   }
+
   public Map<Position, List<Position>> getNeighborsMap() {
     return this.neighbors;
   }
@@ -168,11 +159,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
 
   @Override
   public Set<Position> getFirePositions() {
-    Set<Position> positions = new HashSet<>();
-    for (Fire fire : fires) {
-      positions.add(fire.getPosition());
-    }
-    return positions;
+    return new HashSet<>(firePositions);
   }
 
 }
