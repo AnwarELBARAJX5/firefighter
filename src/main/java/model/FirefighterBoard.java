@@ -43,15 +43,14 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   }
 
   public void initializeElements() {
-    firefighters = new ArrayList<>();
-    fires = new HashSet<>();
-    clouds=new ArrayList<>();
+    agents.clear();
+    firePositions.clear();
     for (int index = 0; index < initialFireCount; index++)
-      fires.add(new Fire(randomPosition()));
+      agents.add(new Fire(randomPosition()));
     for (int index = 0; index < initialFirefighterCount; index++)
-      firefighters.add(new FireFighter(randomPosition()));
+      agents.add(new FireFighter(randomPosition()));
     for (int index = 0; index < initialCloudCount; index++)
-      clouds.add(new Cloud(randomPosition()));
+      agents.add(new Cloud(randomPosition()));
   }
 
   public Position randomPosition() {
