@@ -17,4 +17,9 @@ public class Fire extends AbstractAgent {
 
         }
     }
+
+    @Override
+    public ModelElement getType() {
+        return ModelElement.FIRE;
+    }
 }

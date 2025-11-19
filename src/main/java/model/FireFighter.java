@@ -21,4 +21,9 @@ public class FireFighter extends AbstractAgent{
             }
         }
     }
+
+    @Override
+    public ModelElement getType() {
+        return ModelElement.FIREFIGHTER;
+    }
 }

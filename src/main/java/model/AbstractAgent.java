@@ -15,4 +15,5 @@ public abstract class AbstractAgent {
         return position;
     }
     public abstract void update(BoardContext context);
+    public abstract ModelElement getType();
 }

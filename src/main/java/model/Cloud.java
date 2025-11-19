@@ -9,6 +9,12 @@ public class Cloud extends AbstractAgent{
     public Cloud(Position startPosition){
         super(startPosition);
     }
+
+    @Override
+    public ModelElement getType() {
+        return ModelElement.CLOUD;
+    }
+
     @Override
     public void update(BoardContext context) {
         this.position=context.randomPosition();

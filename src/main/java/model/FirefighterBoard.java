@@ -11,9 +11,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   private final int initialFireCount;
   private final int initialFirefighterCount;
   private final int initialCloudCount;
-  private List<FireFighter> firefighters;
-  private Set<Fire> fires;
-  private List<Cloud> clouds;
+  private List<AbstractAgent> agents;
   private Set<Position> firesToCreate;
   private Set<Position> firesToExtinguish;
   private Map<Position, List<Position>> neighbors = new HashMap();
