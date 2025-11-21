@@ -27,7 +27,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   private int step = 0;
   private final Random randomGenerator = new Random();
 
-  public FirefighterBoard(int columnCount, int rowCount, int initialFireCount, int initialFirefighterCount,int initialCloudCount,int initialMotorizedFireFighterCount) {
+  public FirefighterBoard(int columnCount, int rowCount, int initialFireCount, int initialFirefighterCount,int initialCloudCount,int initialMotorizedFireFighterCount,int initialMountainCount) {
     this.columnCount = columnCount;
     this.rowCount = rowCount;
     this.positions = new Position[rowCount][columnCount];
@@ -47,6 +47,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
     this.initialFirefighterCount = initialFirefighterCount;
     this.initialCloudCount=initialCloudCount;
     this.initialMotorizedFireFighterCount=initialMotorizedFireFighterCount;
+    this.initialMountainCount=initialMountainCount;
     initializeElements();
   }
 
@@ -61,6 +62,8 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
       addAgent(new Cloud(randomPosition()));
     for (int index = 0; index < initialMotorizedFireFighterCount; index++)
       addAgent(new MotorizedFireFighter(randomPosition()));
+    for (int index = 0; index < initialMountainCount; index++)
+      addSurface(new Mountain(randomPosition()));
 
   }
   private void addAgent(AbstractAgent agent) {
@@ -68,6 +71,9 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
     if (agent instanceof Fire) {
       firePositions.add(agent.getPosition());
     }
+  }
+  private void addSurface(AbstractSurface surface){
+    surfaces.add(surface);
   }
 
   public Position randomPosition() {
@@ -158,7 +164,6 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
           case FIREFIGHTER -> addAgent(new FireFighter(position));
           case CLOUD -> addAgent(new Cloud(position));
           case MOTORIZEDFIREFIGHTER -> addAgent(new MotorizedFireFighter(position));
-          case MOUNTAIN -> addAgent(new Mountain(Position));
         }
       }
   }
