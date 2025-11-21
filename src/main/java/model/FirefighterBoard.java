@@ -18,6 +18,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   private final List<AbstractAgent> agents = new ArrayList<>();
   private final List<AbstractAgent> agentsToAdd = new ArrayList<>();
   private final List<AbstractAgent> agentsToRemove = new ArrayList<>();
+  private final List<AbstractSurface> surfaces = new ArrayList<>();
   private final Set<Position> firePositions = new HashSet<>();
   private final Set<Position> fireToCreate = new HashSet<>();
   private Map<Position, List<Position>> neighbors = new HashMap();
@@ -61,10 +62,10 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
       addAgent(new MotorizedFireFighter(randomPosition()));
 
   }
-  private void addAgent(Element element) {
-    agents.add(element);
-    if (element instanceof Fire) {
-      firePositions.add(element.getPosition());
+  private void addAgent(AbstractAgent agent) {
+    agents.add(agent);
+    if (agent instanceof Fire) {
+      firePositions.add(agent.getPosition());
     }
   }
 
