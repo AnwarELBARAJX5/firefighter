@@ -91,6 +91,9 @@ public class Controller {
     if (squareState.contains(ModelElement.CLOUD)){
       return ViewElement.CLOUD;
     }
+    if(squareState.contains(ModelElement.MOTORIZEDFIREFIGHTER)){
+      return ViewElement.MOTORIZEDFIREFIGHTER;
+    }
     return ViewElement.EMPTY;
   }
 
