@@ -5,6 +5,8 @@ import util.TargetStrategy;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static view.ViewElement.MOTORIZEDFIREFIGHTER;
+
 
 public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   private final int columnCount;
