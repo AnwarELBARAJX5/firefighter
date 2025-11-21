@@ -12,6 +12,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   private final int initialFireCount;
   private final int initialFirefighterCount;
   private final int initialCloudCount;
+  private final int initialMotorizedFireFighterCount;
   private final List<AbstractAgent> agents = new ArrayList<>();
   private final List<AbstractAgent> agentsToAdd = new ArrayList<>();
   private final List<AbstractAgent> agentsToRemove = new ArrayList<>();
@@ -22,7 +23,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   private int step = 0;
   private final Random randomGenerator = new Random();
 
-  public FirefighterBoard(int columnCount, int rowCount, int initialFireCount, int initialFirefighterCount,int initialCloudCount) {
+  public FirefighterBoard(int columnCount, int rowCount, int initialFireCount, int initialFirefighterCount,int initialCloudCount,int initialMotorizedFireFighterCount) {
     this.columnCount = columnCount;
     this.rowCount = rowCount;
     this.positions = new Position[rowCount][columnCount];
@@ -41,6 +42,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
     this.initialFireCount = initialFireCount;
     this.initialFirefighterCount = initialFirefighterCount;
     this.initialCloudCount=initialCloudCount;
+    this.initialMotorizedFireFighterCount=initialMotorizedFireFighterCount;
     initializeElements();
   }
 
@@ -53,6 +55,9 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
       addAgent(new FireFighter(randomPosition()));
     for (int index = 0; index < initialCloudCount; index++)
       addAgent(new Cloud(randomPosition()));
+    for (int index = 0; index < initialMotorizedFireFighterCount; index++)
+      addAgent(new MotorizedFireFighter(randomPosition()));
+
   }
   private void addAgent(AbstractAgent agent) {
     agents.add(agent);
@@ -148,6 +153,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
           case FIRE -> addAgent(new Fire(position));
           case FIREFIGHTER -> addAgent(new FireFighter(position));
           case CLOUD -> addAgent(new Cloud(position));
+          case MOTORIZEDFIREFIGHTER -> addAgent(new MotorizedFireFighter(position));
         }
       }
   }
