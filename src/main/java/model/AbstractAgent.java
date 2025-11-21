@@ -4,7 +4,7 @@ import model.BoardContext;
 import util.Position;
 
 
-public abstract class AbstractAgent {
+public abstract class AbstractAgent implements Element{
     protected Position position;
 
     public AbstractAgent(Position startPosition) {

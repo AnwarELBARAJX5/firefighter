@@ -61,10 +61,10 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
       addAgent(new MotorizedFireFighter(randomPosition()));
 
   }
-  private void addAgent(AbstractAgent agent) {
-    agents.add(agent);
-    if (agent instanceof Fire) {
-      firePositions.add(agent.getPosition());
+  private void addAgent(Element element) {
+    agents.add(element);
+    if (element instanceof Fire) {
+      firePositions.add(element.getPosition());
     }
   }
 
@@ -76,7 +76,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   public List<ModelElement> getState(Position position) {
     return agents.stream()
             .filter(a -> a.getPosition().equals(position))
-            .map(AbstractAgent::getType)
+            .map(Element::getType)
             .collect(Collectors.toList());
   }
 
@@ -106,7 +106,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
     agents.removeAll(agentsToRemove);
     agents.addAll(agentsToAdd);
     firePositions.clear();
-    for (AbstractAgent agent : agents) {
+    for (Element agent : agents) {
       if (agent instanceof Fire) firePositions.add(agent.getPosition());
     }
     for (AbstractAgent a : agentsToAdd) modifiedPositions.add(a.getPosition());
@@ -156,6 +156,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
           case FIREFIGHTER -> addAgent(new FireFighter(position));
           case CLOUD -> addAgent(new Cloud(position));
           case MOTORIZEDFIREFIGHTER -> addAgent(new MotorizedFireFighter(position));
+          case MOUNTAIN -> addAgent(new Mountain(Position));
         }
       }
   }
