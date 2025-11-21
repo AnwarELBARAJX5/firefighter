@@ -17,13 +17,18 @@ public class Cloud extends AbstractAgent{
 
     @Override
     public void update(BoardContext context) {
-        this.position=context.randomPosition();
-        List<Position> neighbors=context.getNeighbors(this.position);
-        for(Position neighborsPos:neighbors){
-            if(context.getFirePositions().contains(neighborsPos)){
-                context.extinguish(neighborsPos);
+        List<Position> neighbors = context.getNeighbors(this.position);
+        if (!neighbors.isEmpty()) {
+            this.position = neighbors.get(randomNumbers.nextInt(neighbors.size()));
+        }
+        List<Position> newNeighbors = context.getNeighbors(this.position);
+        for(Position neighborPos : newNeighbors){
+            if(context.getFirePositions().contains(neighborPos)){
+                context.extinguish(neighborPos);
             }
         }
-
+        if(context.getFirePositions().contains(this.position)){
+            context.extinguish(this.position);
+        }
     }
 }
