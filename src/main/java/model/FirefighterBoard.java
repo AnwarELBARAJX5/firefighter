@@ -15,10 +15,11 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   private final int initialFirefighterCount;
   private final int initialCloudCount;
   private final int initialMotorizedFireFighterCount;
+  private final int initialMountainCount;
   private final List<AbstractAgent> agents = new ArrayList<>();
+  private final List<AbstractSurface> surfaces = new ArrayList<>();
   private final List<AbstractAgent> agentsToAdd = new ArrayList<>();
   private final List<AbstractAgent> agentsToRemove = new ArrayList<>();
-  private final List<AbstractSurface> surfaces = new ArrayList<>();
   private final Set<Position> firePositions = new HashSet<>();
   private final Set<Position> fireToCreate = new HashSet<>();
   private Map<Position, List<Position>> neighbors = new HashMap();
