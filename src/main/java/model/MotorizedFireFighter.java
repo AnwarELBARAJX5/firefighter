@@ -22,7 +22,10 @@ public class MotorizedFireFighter extends AbstractAgent{
             }
         }
         Position secondFirefighterPosition = targetStrategy.neighborClosestToFire(this.position,context.getFirePositions(), context.getNeighborsMap());
-        this.position=secondFirefighterPosition;
+        if (!secondFirefighterPosition .equals(this.position) && context.isOccupied(secondFirefighterPosition )) {
+        } else {
+            this.position = secondFirefighterPosition ;
+        }
         context.extinguish(this.position);
         List<Position> secondNeighbors=context.getNeighbors(this.position);
         for(Position neighborsPos:secondNeighbors){
