@@ -18,12 +18,12 @@ public class SimulatorApplication extends javafx.application.Application {
   private static final int BOX_WIDTH = 30;
   private static final int BOX_HEIGHT = 30;
   public static final int INITIAL_FIRE_COUNT = 6;
-  public static final int INITIAL_FIREFIGHTER_COUNT = 10;
+  public static final int INITIAL_FIREFIGHTER_COUNT = 6;
   public static final int INITIAL_CLOUD_COUNT = 12;
-  public static final int INITIAL_MOTORIZED_FIRE_FIGHTER_COUNT = 6;
-  public static final int INITIAL_MOUNTAIN_COUNT = 10;
-  public static final int INITIAL_ROAD_COUNT=20;
-  public static final int INITIAL_ROCK_COUNT=50;
+  public static final int INITIAL_MOTORIZED_FIRE_FIGHTER_COUNT = 2;
+  public static final int INITIAL_MOUNTAIN_COUNT = 8;
+  public static final int INITIAL_ROAD_COUNT=10;
+  public static final int INITIAL_ROCK_COUNT=10;
   private Stage primaryStage;
   private Parent view;
   private void initializePrimaryStage(Stage primaryStage) {
