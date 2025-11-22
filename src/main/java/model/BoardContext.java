@@ -15,5 +15,6 @@ public interface BoardContext {
 	public int rowCount();
 	public int columnCount();
 	public Position randomPosition();
+	boolean isOccupied(Position position);
 
 }

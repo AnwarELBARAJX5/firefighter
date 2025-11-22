@@ -230,4 +230,14 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
     return new HashSet<>(firePositions);
   }
 
+  @Override
+  public boolean isOccupied(Position position) {
+    for (AbstractAgent agent : agents) {
+      if (agent.getPosition().equals(position)) {
+
+          return true;
+        }
+    }
+    return false;
+  }
 }
