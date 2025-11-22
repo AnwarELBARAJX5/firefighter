@@ -17,4 +17,9 @@ public class Mountain extends AbstractSurface{
     public boolean isTraversable() {
         return false;
     }
+
+    @Override
+    public boolean isFlammable() {
+        return false;
+    }
 }

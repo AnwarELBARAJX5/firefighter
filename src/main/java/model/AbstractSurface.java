@@ -10,4 +10,5 @@ public abstract class AbstractSurface implements Element{
     }
     public abstract ModelElement getType();
     public abstract boolean isTraversable();
+    public abstract boolean isFlammable();
 }

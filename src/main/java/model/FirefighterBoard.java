@@ -153,7 +153,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   }
   @Override
   public void createFire(Position position) {
-    if (!firePositions.contains(position) && !fireToCreate.contains(position)&&!isMountain(position)) {
+    if (!firePositions.contains(position) && !fireToCreate.contains(position)&&isFlammable(position)) {
       AbstractAgent newFire = new Fire(position);
       agentsToAdd.add(newFire);
       fireToCreate.add(position);
@@ -198,15 +198,15 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
     return validNeighbors;
   }
 
-  private boolean isMountain(Position p) {
+
+  private boolean isFlammable(Position p) {
     for (AbstractSurface surface : surfaces) {
-      if (surface.getPosition().equals(p) && surface instanceof Mountain) {
-        return true;
+      if (surface.getPosition().equals(p)) {
+        return surface.isFlammable();
       }
     }
-    return false;
+    return true;
   }
-
   @Override
   public Set<Position> getFirePositions() {
     return new HashSet<>(firePositions);
