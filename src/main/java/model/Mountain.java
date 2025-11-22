@@ -19,7 +19,7 @@ public class Mountain extends AbstractSurface{
     }
 
     @Override
-    public boolean isFlammable() {
+    public boolean tryToIgnite() {
         return false;
     }
 }

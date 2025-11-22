@@ -2,8 +2,9 @@ package model;
 
 import util.Position;
 
-public class Road extends AbstractSurface{
-    public Road(Position position){
+public class Rock extends AbstractSurface{
+    private int resistance=2; //car le feu attaque tous les 2 tours
+    public Rock(Position position){
         super(position);
     }
     @Override
@@ -13,7 +14,7 @@ public class Road extends AbstractSurface{
 
     @Override
     public ModelElement getType() {
-        return ModelElement.ROAD;
+        return ModelElement.ROCK;
     }
 
     @Override
@@ -23,6 +24,11 @@ public class Road extends AbstractSurface{
 
     @Override
     public boolean tryToIgnite() {
-        return false;
+        if(resistance>0){
+            resistance--;
+            return false;
+        }else{
+            return true;
+        }
     }
 }

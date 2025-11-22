@@ -16,6 +16,8 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   private final int initialCloudCount;
   private final int initialMotorizedFireFighterCount;
   private final int initialMountainCount;
+  private final int initialRoadCount;
+  private final int initialRockCount;
   private final List<AbstractAgent> agents = new ArrayList<>();
   private final List<AbstractSurface> surfaces = new ArrayList<>();
   private final List<AbstractAgent> agentsToAdd = new ArrayList<>();
@@ -27,7 +29,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   private int step = 0;
   private final Random randomGenerator = new Random();
 
-  public FirefighterBoard(int columnCount, int rowCount, int initialFireCount, int initialFirefighterCount,int initialCloudCount,int initialMotorizedFireFighterCount,int initialMountainCount) {
+  public FirefighterBoard(int columnCount, int rowCount, int initialFireCount, int initialFirefighterCount,int initialCloudCount,int initialMotorizedFireFighterCount,int initialMountainCount,int initialRoadCount,int initialRockCount) {
     this.columnCount = columnCount;
     this.rowCount = rowCount;
     this.positions = new Position[rowCount][columnCount];
@@ -48,12 +50,15 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
     this.initialCloudCount=initialCloudCount;
     this.initialMotorizedFireFighterCount=initialMotorizedFireFighterCount;
     this.initialMountainCount=initialMountainCount;
+    this.initialRoadCount=initialRoadCount;
+    this.initialRockCount=initialRockCount;
     initializeElements();
   }
 
   public void initializeElements() {
     agents.clear();
     firePositions.clear();
+    surfaces.clear();
     for (int index = 0; index < initialFireCount; index++)
       addAgent(new Fire(randomPosition()));
     for (int index = 0; index < initialFirefighterCount; index++)
@@ -64,6 +69,11 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
       addAgent(new MotorizedFireFighter(randomPosition()));
     for (int index = 0; index < initialMountainCount; index++)
       addSurface(new Mountain(randomPosition()));
+    for (int index = 0; index < initialRoadCount; index++)
+      addSurface(new Road(randomPosition()));
+    for (int index = 0; index < initialRockCount; index++)
+      addSurface(new Rock(randomPosition()));
+
 
   }
   private void addAgent(AbstractAgent agent) {
@@ -151,9 +161,22 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
       }
     }
   }
+
   @Override
   public void createFire(Position position) {
-    if (!firePositions.contains(position) && !fireToCreate.contains(position)&&isFlammable(position)) {
+    if (firePositions.contains(position) || fireToCreate.contains(position)) {
+      return;
+    }
+
+    boolean canIgnite = true;
+    for (AbstractSurface surface : surfaces) {
+      if (surface.getPosition().equals(position)) {
+        canIgnite = surface.tryToIgnite();
+        break;
+      }
+    }
+
+    if (canIgnite) {
       AbstractAgent newFire = new Fire(position);
       agentsToAdd.add(newFire);
       fireToCreate.add(position);
@@ -172,6 +195,8 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
           case CLOUD -> addAgent(new Cloud(position));
           case MOTORIZEDFIREFIGHTER -> addAgent(new MotorizedFireFighter(position));
           case MOUNTAIN -> addSurface(new Mountain(position));
+          case ROAD -> addSurface(new Road(position));
+          case ROCK -> addSurface(new Rock(position));
         }
       }
   }
@@ -199,14 +224,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   }
 
 
-  private boolean isFlammable(Position p) {
-    for (AbstractSurface surface : surfaces) {
-      if (surface.getPosition().equals(p)) {
-        return surface.isFlammable();
-      }
-    }
-    return true;
-  }
+
   @Override
   public Set<Position> getFirePositions() {
     return new HashSet<>(firePositions);

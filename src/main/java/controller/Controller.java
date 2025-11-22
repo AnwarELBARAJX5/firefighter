@@ -97,6 +97,12 @@ public class Controller {
     if(squareState.contains(ModelElement.MOUNTAIN)){
       return ViewElement.MOUNTAIN;
     }
+    if(squareState.contains(ModelElement.ROAD)){
+      return ViewElement.ROAD;
+    }
+    if(squareState.contains(ModelElement.ROCK)){
+      return ViewElement.ROCK;
+    }
     return ViewElement.EMPTY;
   }
 
@@ -133,9 +139,9 @@ public class Controller {
   }
 
   public void initialize(int squareWidth, int squareHeight, int columnCount,
-                                int rowCount, int initialFireCount, int initialFirefighterCount,int initialCloudCount,int initialMotorizedFireFighterCount,int initialMountainCount) {
+                                int rowCount, int initialFireCount, int initialFirefighterCount,int initialCloudCount,int initialMotorizedFireFighterCount,int initialMountainCount,int initialRoadCount,int initialRockCount) {
     grid.setDimensions(columnCount, rowCount, squareWidth, squareHeight);
-    this.setModel(new FirefighterBoard(columnCount, rowCount, initialFireCount, initialFirefighterCount,initialCloudCount,initialMotorizedFireFighterCount,initialMountainCount));
+    this.setModel(new FirefighterBoard(columnCount, rowCount, initialFireCount, initialFirefighterCount,initialCloudCount,initialMotorizedFireFighterCount,initialMountainCount,initialRoadCount,initialRockCount));
     repaintGrid();
   }
 
