@@ -14,4 +14,7 @@ public class Mountain extends AbstractSurface{
     public ModelElement getType() {
         return ModelElement.MOUNTAIN;
     }
+    public boolean isTraversable() {
+        return false;
+    }
 }

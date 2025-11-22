@@ -181,10 +181,17 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   }
   @Override
   public List<Position> getNeighbors(Position p) {
-    List<Position> neighbors = this.neighbors.get(p);
+    List<Position> allNeighbors = this.neighbors.get(p);
     List<Position> validNeighbors = new ArrayList<>();
-    for (Position neighbor : neighbors) {
-      if (!isMountain(neighbor)) {
+    for (Position neighbor : allNeighbors) {
+      boolean blocked = false;
+      for (AbstractSurface surface : surfaces) {
+        if (surface.getPosition().equals(neighbor) && !surface.isTraversable()) {
+          blocked = true;
+          break;
+        }
+      }
+      if (!blocked) {
         validNeighbors.add(neighbor);
       }
     }

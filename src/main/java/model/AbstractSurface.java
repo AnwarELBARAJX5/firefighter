@@ -9,4 +9,5 @@ public abstract class AbstractSurface implements Element{
         this.position = startPosition;
     }
     public abstract ModelElement getType();
+    public abstract boolean isTraversable();
 }
