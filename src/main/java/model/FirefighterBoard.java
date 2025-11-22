@@ -82,10 +82,16 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
 
   @Override
   public List<ModelElement> getState(Position position) {
-    return agents.stream()
+    List<ModelElement> result = agents.stream()
             .filter(a -> a.getPosition().equals(position))
             .map(Element::getType)
             .collect(Collectors.toList());
+    surfaces.stream()
+            .filter(s -> s.getPosition().equals(position))
+            .map(Element::getType)
+            .forEach(result::add);
+
+    return result;
   }
 
   @Override
