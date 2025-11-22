@@ -153,7 +153,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   }
   @Override
   public void createFire(Position position) {
-    if (!firePositions.contains(position) && !fireToCreate.contains(position)) {
+    if (!firePositions.contains(position) && !fireToCreate.contains(position)&&!isMountain(position)) {
       AbstractAgent newFire = new Fire(position);
       agentsToAdd.add(newFire);
       fireToCreate.add(position);
@@ -163,6 +163,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   @Override
   public void setState(List<ModelElement> state, Position position) {
       agents.removeIf(a -> a.getPosition().equals(position));
+      surfaces.removeIf(s -> s.getPosition().equals(position));
       firePositions.remove(position);
       for (ModelElement element : state) {
         switch (element) {
@@ -170,6 +171,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
           case FIREFIGHTER -> addAgent(new FireFighter(position));
           case CLOUD -> addAgent(new Cloud(position));
           case MOTORIZEDFIREFIGHTER -> addAgent(new MotorizedFireFighter(position));
+          case MOUNTAIN -> addSurface(new Mountain(position));
         }
       }
   }
@@ -179,7 +181,23 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   }
   @Override
   public List<Position> getNeighbors(Position p) {
-    return this.neighbors.get(p);
+    List<Position> neighbors = this.neighbors.get(p);
+    List<Position> validNeighbors = new ArrayList<>();
+    for (Position neighbor : neighbors) {
+      if (!isMountain(neighbor)) {
+        validNeighbors.add(neighbor);
+      }
+    }
+    return validNeighbors;
+  }
+
+  private boolean isMountain(Position p) {
+    for (AbstractSurface surface : surfaces) {
+      if (surface.getPosition().equals(p) && surface instanceof Mountain) {
+        return true;
+      }
+    }
+    return false;
   }
 
   @Override
