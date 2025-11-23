@@ -6,9 +6,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.ModelElement;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SimulatorApplication extends javafx.application.Application {
   private static final String VIEW_RESOURCE_PATH = "/view/view.fxml";
@@ -17,13 +20,6 @@ public class SimulatorApplication extends javafx.application.Application {
   private static final int COLUMN_COUNT = 20;
   private static final int BOX_WIDTH = 30;
   private static final int BOX_HEIGHT = 30;
-  public static final int INITIAL_FIRE_COUNT = 6;
-  public static final int INITIAL_FIREFIGHTER_COUNT = 6;
-  public static final int INITIAL_CLOUD_COUNT = 12;
-  public static final int INITIAL_MOTORIZED_FIRE_FIGHTER_COUNT = 2;
-  public static final int INITIAL_MOUNTAIN_COUNT = 8;
-  public static final int INITIAL_ROAD_COUNT=10;
-  public static final int INITIAL_ROCK_COUNT=10;
   private Stage primaryStage;
   private Parent view;
   private void initializePrimaryStage(Stage primaryStage) {
@@ -47,8 +43,14 @@ public class SimulatorApplication extends javafx.application.Application {
     loader.setLocation(location);
     view = loader.load();
     Controller controller = loader.getController();
-    controller.initialize(BOX_WIDTH, BOX_HEIGHT, COLUMN_COUNT, ROW_COUNT,
-            INITIAL_FIRE_COUNT, INITIAL_FIREFIGHTER_COUNT,INITIAL_CLOUD_COUNT,INITIAL_MOTORIZED_FIRE_FIGHTER_COUNT,INITIAL_MOUNTAIN_COUNT,INITIAL_ROAD_COUNT,INITIAL_ROCK_COUNT);
+    Map<ModelElement, Integer> config = new HashMap<>();
+    config.put(ModelElement.FIRE, 6);
+    config.put(ModelElement.FIREFIGHTER, 10);
+    config.put(ModelElement.CLOUD, 12);
+    config.put(ModelElement.MOUNTAIN, 10);
+    config.put(ModelElement.ROCK, 15);
+    config.put(ModelElement.MOTORIZEDFIREFIGHTER, 6);
+    controller.initialize(BOX_WIDTH, BOX_HEIGHT, COLUMN_COUNT, ROW_COUNT,config);
   }
 
   private void showScene() {

@@ -21,6 +21,7 @@ import view.ViewElement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.Objects.requireNonNull;
 
@@ -139,9 +140,9 @@ public class Controller {
   }
 
   public void initialize(int squareWidth, int squareHeight, int columnCount,
-                                int rowCount, int initialFireCount, int initialFirefighterCount,int initialCloudCount,int initialMotorizedFireFighterCount,int initialMountainCount,int initialRoadCount,int initialRockCount) {
+                         int rowCount, Map<ModelElement,Integer> initialConfig) {
     grid.setDimensions(columnCount, rowCount, squareWidth, squareHeight);
-    this.setModel(new FirefighterBoard(columnCount, rowCount, initialFireCount, initialFirefighterCount,initialCloudCount,initialMotorizedFireFighterCount,initialMountainCount,initialRoadCount,initialRockCount));
+    this.setModel(new FirefighterBoard(columnCount, rowCount,initialConfig));
     repaintGrid();
   }
 
