@@ -185,20 +185,17 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
 
   @Override
   public void setState(List<ModelElement> state, Position position) {
-      agents.removeIf(a -> a.getPosition().equals(position));
-      surfaces.removeIf(s -> s.getPosition().equals(position));
-      firePositions.remove(position);
-      for (ModelElement element : state) {
-        switch (element) {
-          case FIRE -> addAgent(new Fire(position));
-          case FIREFIGHTER -> addAgent(new FireFighter(position));
-          case CLOUD -> addAgent(new Cloud(position));
-          case MOTORIZEDFIREFIGHTER -> addAgent(new MotorizedFireFighter(position));
-          case MOUNTAIN -> addSurface(new Mountain(position));
-          case ROAD -> addSurface(new Road(position));
-          case ROCK -> addSurface(new Rock(position));
-        }
+    agents.removeIf(a -> a.getPosition().equals(position));
+    surfaces.removeIf(s -> s.getPosition().equals(position));
+    firePositions.remove(position);
+    for (ModelElement type : state) {
+      Element element = ElementFactory.create(type, position);
+      if (element instanceof AbstractAgent agent) {
+        addAgent(agent);
+      } else if (element instanceof AbstractSurface surface) {
+        addSurface(surface);
       }
+    }
   }
 
   public Map<Position, List<Position>> getNeighborsMap() {
