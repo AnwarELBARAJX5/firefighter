@@ -46,10 +46,10 @@ public class SimulatorApplication extends javafx.application.Application {
     Map<ModelElement, Integer> config = new HashMap<>();
     config.put(ModelElement.FIRE, 6);
     config.put(ModelElement.FIREFIGHTER, 10);
-    config.put(ModelElement.CLOUD, 12);
+    config.put(ModelElement.CLOUD, 6);
     config.put(ModelElement.MOUNTAIN, 10);
     config.put(ModelElement.ROCK, 15);
-    config.put(ModelElement.MOTORIZEDFIREFIGHTER, 6);
+    config.put(ModelElement.MOTORIZEDFIREFIGHTER, 5);
     controller.initialize(BOX_WIDTH, BOX_HEIGHT, COLUMN_COUNT, ROW_COUNT,config);
   }
 

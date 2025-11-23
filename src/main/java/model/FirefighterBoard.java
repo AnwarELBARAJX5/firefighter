@@ -183,8 +183,14 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
     }
   }
 
+  @Override
   public Map<Position, List<Position>> getNeighborsMap() {
-    return this.neighbors;
+    Map<Position, List<Position>> filteredMap = new HashMap<>();
+    for (Position p : this.neighbors.keySet()) {
+      filteredMap.put(p, getNeighbors(p));
+    }
+
+    return filteredMap;
   }
   @Override
   public List<Position> getNeighbors(Position p) {
