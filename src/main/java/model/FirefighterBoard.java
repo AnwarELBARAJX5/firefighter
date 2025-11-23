@@ -11,13 +11,7 @@ import static view.ViewElement.MOTORIZEDFIREFIGHTER;
 public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   private final int columnCount;
   private final int rowCount;
-  private final int initialFireCount;
-  private final int initialFirefighterCount;
-  private final int initialCloudCount;
-  private final int initialMotorizedFireFighterCount;
-  private final int initialMountainCount;
-  private final int initialRoadCount;
-  private final int initialRockCount;
+  private  Map<ModelElement, Integer> initialConfig=new HashMap<>();
   private final List<AbstractAgent> agents = new ArrayList<>();
   private final List<AbstractSurface> surfaces = new ArrayList<>();
   private final List<AbstractAgent> agentsToAdd = new ArrayList<>();
@@ -29,7 +23,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   private int step = 0;
   private final Random randomGenerator = new Random();
 
-  public FirefighterBoard(int columnCount, int rowCount, int initialFireCount, int initialFirefighterCount,int initialCloudCount,int initialMotorizedFireFighterCount,int initialMountainCount,int initialRoadCount,int initialRockCount) {
+  public FirefighterBoard(int columnCount, int rowCount,Map<ModelElement, Integer> config) {
     this.columnCount = columnCount;
     this.rowCount = rowCount;
     this.positions = new Position[rowCount][columnCount];
@@ -45,13 +39,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
         if (column < columnCount - 1) list.add(positions[row][column + 1]);
         neighbors.put(positions[row][column], list);
       }
-    this.initialFireCount = initialFireCount;
-    this.initialFirefighterCount = initialFirefighterCount;
-    this.initialCloudCount=initialCloudCount;
-    this.initialMotorizedFireFighterCount=initialMotorizedFireFighterCount;
-    this.initialMountainCount=initialMountainCount;
-    this.initialRoadCount=initialRoadCount;
-    this.initialRockCount=initialRockCount;
+    this.initialConfig=config;
     initializeElements();
   }
 
@@ -59,21 +47,18 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
     agents.clear();
     firePositions.clear();
     surfaces.clear();
-    for (int index = 0; index < initialFireCount; index++)
-      addAgent(new Fire(randomPosition()));
-    for (int index = 0; index < initialFirefighterCount; index++)
-      addAgent(new FireFighter(randomPosition()));
-    for (int index = 0; index < initialCloudCount; index++)
-      addAgent(new Cloud(randomPosition()));
-    for (int index = 0; index < initialMotorizedFireFighterCount; index++)
-      addAgent(new MotorizedFireFighter(randomPosition()));
-    for (int index = 0; index < initialMountainCount; index++)
-      addSurface(new Mountain(randomPosition()));
-    for (int index = 0; index < initialRoadCount; index++)
-      addSurface(new Road(randomPosition()));
-    for (int index = 0; index < initialRockCount; index++)
-      addSurface(new Rock(randomPosition()));
-
+    for (Map.Entry<ModelElement, Integer> entry : initialConfig.entrySet()) {
+      ModelElement type = entry.getKey();
+      int count = entry.getValue();
+      for (int i = 0; i < count; i++) {
+        Element element = ElementFactory.create(type, randomPosition());
+        if (element instanceof AbstractAgent agent) {
+          addAgent(agent);
+        } else if (element instanceof AbstractSurface surface) {
+          addSurface(surface);
+        }
+      }
+    }
 
   }
   private void addAgent(AbstractAgent agent) {
