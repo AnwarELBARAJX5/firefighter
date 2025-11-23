@@ -10,6 +10,12 @@ public class MotorizedFireFighter extends AbstractAgent{
     public MotorizedFireFighter(Position startPosition){
         super(startPosition);
     }
+
+    @Override
+    public boolean isBlocking() {
+        return true;
+    }
+
     @Override
     public void update(BoardContext context) {
         step(context);

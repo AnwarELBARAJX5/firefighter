@@ -16,6 +16,11 @@ public class Cloud extends AbstractAgent{
     }
 
     @Override
+    public boolean isBlocking() {
+        return false;
+    }
+
+    @Override
     public void update(BoardContext context) {
         List<Position> neighbors = context.getNeighbors(this.position);
         if (!neighbors.isEmpty()) {

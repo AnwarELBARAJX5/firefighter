@@ -7,6 +7,12 @@ public class Fire extends AbstractAgent {
     public Fire(Position startPosition){
         super(startPosition);
     }
+
+    @Override
+    public boolean isBlocking() {
+        return false;
+    }
+
     @Override
     public void update(BoardContext context) {
         if (context.stepNumber() % 2 == 0) {

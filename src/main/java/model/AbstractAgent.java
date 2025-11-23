@@ -16,4 +16,5 @@ public abstract class AbstractAgent implements Element{
     }
     public abstract void update(BoardContext context);
     public abstract ModelElement getType();
+    public abstract boolean isBlocking();
 }

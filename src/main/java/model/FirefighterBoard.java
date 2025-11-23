@@ -162,7 +162,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
     }
 
     if (canIgnite) {
-      AbstractAgent newFire = new Fire(position);
+      AbstractAgent newFire = (AbstractAgent) ElementFactory.create(ModelElement.FIRE, position);
       agentsToAdd.add(newFire);
       fireToCreate.add(position);
     }
@@ -215,7 +215,7 @@ public class FirefighterBoard implements Board<List<ModelElement>>,BoardContext{
   @Override
   public boolean isOccupied(Position position) {
     for (AbstractAgent agent : agents) {
-      if (agent.getPosition().equals(position)) {
+      if (agent.getPosition().equals(position)&&agent.isBlocking()) {
 
           return true;
         }

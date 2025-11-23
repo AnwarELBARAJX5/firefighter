@@ -9,6 +9,12 @@ public class FireFighter extends AbstractAgent{
     public FireFighter(Position startPosition) {
         super(startPosition);
     }
+
+    @Override
+    public boolean isBlocking() {
+        return true;
+    }
+
     @Override
     public void update(BoardContext context) {
         Position newFirefighterPosition = targetStrategy.neighborClosestToFire(this.position,context.getFirePositions(), context.getNeighborsMap());
