@@ -141,15 +141,9 @@ public class Controller {
 
   public void initialize(int squareWidth, int squareHeight, int columnCount,
                          int rowCount, Map<ModelElement, Integer> initialConfig) {
-
-    // 1. CHOIX DE LA VUE (Ici on force Hexagonal pour tester)
     this.grid = new view.HexagonalGrid();
     // Pour remettre en carré plus tard : this.grid = new view.SquareGrid();
-
-    // 2. CONFIGURATION DE LA GRILLE
     grid.setDimensions(columnCount, rowCount, squareWidth, squareHeight);
-
-    // Important : On ajoute la grille créée dans l'interface (le Pane)
     gridContainer.getChildren().clear();
     gridContainer.getChildren().add(grid);
 

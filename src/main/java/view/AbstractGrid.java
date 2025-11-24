@@ -85,7 +85,7 @@ public abstract class AbstractGrid extends Canvas implements Grid<ViewElement> {
 
 
 
-    private void clearBox(int row, int column){
+     void clearBox(int row, int column){
         getGraphicsContext2D().clearRect(column * boxWidth,row * boxHeight, boxWidth, boxHeight);
     }
     abstract void paintBox(int row, int column, Color color);
