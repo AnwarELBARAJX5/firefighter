@@ -24,12 +24,12 @@ public class FirefighterBoardTest {
 
   @Test
   void testColumnCount(){
-    Board<List<ModelElement>> board = new FirefighterBoard(20, 10, config);
+    Board<List<ModelElement>> board = new GridBoard(20, 10, config);
     assertThat(board.columnCount()).isEqualTo(20);
   }
   @Test
   void testRowCount(){
-    Board<List<ModelElement>> board = new FirefighterBoard(20, 10, config);
+    Board<List<ModelElement>> board = new GridBoard(20, 10, config);
     assertThat(board.rowCount()).isEqualTo(10);
   }
   @Test

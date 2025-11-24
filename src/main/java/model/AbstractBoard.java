@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import static view.ViewElement.MOTORIZEDFIREFIGHTER;
 
 
-public class AbstractBoard implements Board<List<ModelElement>>,BoardContext{
+public abstract class AbstractBoard implements Board<List<ModelElement>>,BoardContext{
     final int columnCount;
     final int rowCount;
     private  Map<ModelElement, Integer> initialConfig=new HashMap<>();

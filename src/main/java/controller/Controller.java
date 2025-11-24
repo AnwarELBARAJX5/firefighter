@@ -12,9 +12,10 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.util.Duration;
 import javafx.util.Pair;
+import model.AbstractBoard;
 import model.Board;
+import model.GridBoard;
 import model.ModelElement;
-import model.FirefighterBoard;
 import util.Position;
 import view.Grid;
 import view.ViewElement;
@@ -55,8 +56,8 @@ public class Controller {
     pauseToggleButton.setSelected(true);
   }
 
-  private void setModel(FirefighterBoard firefighterBoard) {
-    this.board = requireNonNull(firefighterBoard, "firefighter.model is null");
+  private void setModel(AbstractBoard Board) {
+    this.board = requireNonNull(Board, "firefighter.model is null");
   }
 
   private void updateBoard(){
@@ -142,7 +143,7 @@ public class Controller {
   public void initialize(int squareWidth, int squareHeight, int columnCount,
                          int rowCount, Map<ModelElement,Integer> initialConfig) {
     grid.setDimensions(columnCount, rowCount, squareWidth, squareHeight);
-    this.setModel(new FirefighterBoard(columnCount, rowCount,initialConfig));
+    this.setModel(new GridBoard(columnCount, rowCount,initialConfig));
     repaintGrid();
   }
 
