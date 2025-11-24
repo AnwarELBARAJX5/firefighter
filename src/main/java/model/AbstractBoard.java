@@ -9,8 +9,8 @@ import static view.ViewElement.MOTORIZEDFIREFIGHTER;
 
 
 public class AbstractBoard implements Board<List<ModelElement>>,BoardContext{
-    private final int columnCount;
-    private final int rowCount;
+    final int columnCount;
+    final int rowCount;
     private  Map<ModelElement, Integer> initialConfig=new HashMap<>();
     private final List<AbstractAgent> agents = new ArrayList<>();
     private final List<AbstractSurface> surfaces = new ArrayList<>();
@@ -18,8 +18,8 @@ public class AbstractBoard implements Board<List<ModelElement>>,BoardContext{
     private final List<AbstractAgent> agentsToRemove = new ArrayList<>();
     private final Set<Position> firePositions = new HashSet<>();
     private final Set<Position> fireToCreate = new HashSet<>();
-    private Map<Position, List<Position>> neighbors = new HashMap();
-    private final Position[][] positions;
+    Map<Position, List<Position>> neighbors = new HashMap();
+    final Position[][] positions;
     private int step = 0;
     private final Random randomGenerator = new Random();
     public AbstractBoard(int columnCount, int rowCount, Map<ModelElement, Integer> config) {
