@@ -3,21 +3,45 @@ package view;
 import javafx.scene.paint.Color;
 
 public class HexagonalGrid extends AbstractGrid {
+
+    // Espace en pixels entre chaque hexagone
+    private static final double GAP = 4.0;
+
     @Override
     protected void paintBox(int row, int column, Color color) {
         getGraphicsContext2D().setFill(color);
-        double shiftX = (row % 2 == 0) ? 0 : boxWidth/ 2.0;
-        getGraphicsContext2D().fillOval(
-                (column * boxWidth) + shiftX,
-                row * boxHeight * 0.85,
-                boxWidth * 0.9,
-                boxHeight * 0.9
-        );
-    }
-    @Override
-    public void paintLines() {
+        double shiftX = (row % 2 == 0) ? 0 : boxWidth / 2.0;
+        double xLogique = (column * boxWidth) + shiftX;
+        double yLogique = row * boxHeight * 0.75;
+        double centerX = xLogique + boxWidth / 2.0;
+        double centerY = yLogique + boxHeight / 2.0;
+        double drawWidth = Math.max(1, boxWidth - GAP);
+        double drawHeight = Math.max(1, boxHeight - GAP);
+        double halfW = drawWidth / 2.0;
+        double halfH = drawHeight / 2.0;
+        double quarterH = drawHeight / 4.0;
 
+        double[] xPoints = {
+                centerX,
+                centerX + halfW,
+                centerX + halfW,
+                centerX,
+                centerX - halfW,
+                centerX - halfW
+        };
+
+        double[] yPoints = {
+                centerY - halfH,
+                centerY - halfH + quarterH,
+                centerY + halfH - quarterH,
+                centerY + halfH,
+                centerY + halfH - quarterH,
+                centerY - halfH + quarterH
+        };
+
+        getGraphicsContext2D().fillPolygon(xPoints, yPoints, 6);
     }
+
     @Override
     public void setDimensions(int columnCount, int rowCount, int boxWidth, int boxHeight) {
         this.boxWidth = boxWidth;
@@ -25,17 +49,14 @@ public class HexagonalGrid extends AbstractGrid {
         this.columnCount = columnCount;
         this.rowCount = rowCount;
         super.setWidth((boxWidth * columnCount) + (boxWidth / 2.0));
-        super.setHeight(boxHeight * rowCount);
+        super.setHeight(boxHeight * (1 + (rowCount - 1) * 0.75));
     }
+
+    @Override
+    public void paintLines() {
+    }
+
     @Override
     protected void clearBox(int row, int column) {
-        // On recalcule les mêmes coordonnées que pour le dessin (paintBox)
-        double shiftX = (row % 2 == 0) ? 0 : boxWidth / 2.0;
-        double x = (column * boxWidth) + shiftX;
-        double y = row * boxHeight * 0.85;
-
-        // On efface une zone un peu plus large pour être sûr de tout nettoyer
-        // (Le +1 et le boxWidth sont pour couvrir les marges de dessin)
-        getGraphicsContext2D().clearRect(x, y, boxWidth, boxHeight);
     }
 }
