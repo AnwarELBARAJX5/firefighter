@@ -11,10 +11,10 @@ public abstract class AbstractGrid extends Canvas implements Grid<ViewElement> {
     private void paintElementAtPosition(ViewElement element, Position position) {
         paintBox(position.row(), position.column(), element.color);
     }
-    private int boxWidth;
-    private int boxHeight;
-    private int columnCount;
-    private int rowCount;
+     int boxWidth;
+     int boxHeight;
+     int columnCount;
+     int rowCount;
 
     @Override
     public void repaint(List<Pair<Position, ViewElement>> positionedElements) {
