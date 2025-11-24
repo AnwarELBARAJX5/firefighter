@@ -15,4 +15,17 @@ public class HexagonalGrid extends AbstractGrid {
                 boxHeight * 0.9
         );
     }
+    @Override
+    public void paintLines() {
+
+    }
+    @Override
+    public void setDimensions(int columnCount, int rowCount, int boxWidth, int boxHeight) {
+        this.boxWidth = boxWidth;
+        this.boxHeight = boxHeight;
+        this.columnCount = columnCount;
+        this.rowCount = rowCount;
+        super.setWidth((boxWidth * columnCount) + (boxWidth / 2.0));
+        super.setHeight(boxHeight * rowCount);
+    }
 }

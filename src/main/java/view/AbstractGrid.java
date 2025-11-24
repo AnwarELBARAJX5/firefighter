@@ -72,17 +72,13 @@ public abstract class AbstractGrid extends Canvas implements Grid<ViewElement> {
         super.setHeight(boxHeight * rowCount);
     }
 
-    private void paintLines(){
-        paintHorizontalLines();
-        paintVerticalLines();
-    }
-
-    private void paintVerticalLines() {
+     abstract void paintLines();
+     void paintVerticalLines() {
         for(int column = 0; column < columnCount; column++)
             getGraphicsContext2D().strokeLine(column * boxWidth, 0,column * boxWidth, getHeight());
     }
 
-    private void paintHorizontalLines() {
+     void paintHorizontalLines() {
         for(int row = 0; row < rowCount; row++)
             getGraphicsContext2D().strokeLine(0, row * boxHeight, getWidth(), row * boxHeight);
     }

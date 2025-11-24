@@ -14,6 +14,7 @@ import javafx.util.Duration;
 import javafx.util.Pair;
 import model.*;
 import util.Position;
+import view.AbstractGrid;
 import view.Grid;
 import view.ViewElement;
 
@@ -37,7 +38,8 @@ public class Controller {
   @FXML
   private ToggleButton playToggleButton;
   @FXML
-  private Grid<ViewElement> grid;
+  private javafx.scene.layout.Pane gridContainer;
+  private AbstractGrid grid;
   private Timeline timeline;
   private Board<List<ModelElement>> board;
 
@@ -138,12 +140,25 @@ public class Controller {
   }
 
   public void initialize(int squareWidth, int squareHeight, int columnCount,
-                         int rowCount, Map<ModelElement,Integer> initialConfig) {
+                         int rowCount, Map<ModelElement, Integer> initialConfig) {
+
+    // 1. CHOIX DE LA VUE (Ici on force Hexagonal pour tester)
+    this.grid = new view.HexagonalGrid();
+    // Pour remettre en carré plus tard : this.grid = new view.SquareGrid();
+
+    // 2. CONFIGURATION DE LA GRILLE
     grid.setDimensions(columnCount, rowCount, squareWidth, squareHeight);
-    this.setModel(new HexagonalBoard(columnCount, rowCount,initialConfig));
+
+    // Important : On ajoute la grille créée dans l'interface (le Pane)
+    gridContainer.getChildren().clear();
+    gridContainer.getChildren().add(grid);
+
+    // 3. CHOIX DU MODÈLE (HexagonalBoard)
+    // Vous l'avez déjà fait, c'est parfait !
+    this.setModel(new model.HexagonalBoard(columnCount, rowCount, initialConfig));
+
     repaintGrid();
   }
-
   public void oneStepButtonAction() {
     this.pause();
     updateBoard();
