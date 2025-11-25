@@ -13,6 +13,9 @@ public class ElementFactory {
             case MOUNTAIN -> new Mountain(position);
             case ROAD -> new Road(position);
             case ROCK -> new Rock(position);
+            case VIRUS ->new Virus(position);
+            case PERSON ->new Person(position);
+            case DOCTOR ->new Doctor(position);
             default -> null;
         };
     }
