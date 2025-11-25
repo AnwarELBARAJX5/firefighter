@@ -43,14 +43,18 @@ public class SimulatorApplication extends javafx.application.Application {
     loader.setLocation(location);
     view = loader.load();
     Controller controller = loader.getController();
-    Map<ModelElement, Integer> config = new HashMap<>();
-    config.put(ModelElement.FIRE, 6);
-    config.put(ModelElement.FIREFIGHTER, 10);
-    config.put(ModelElement.CLOUD, 6);
-    config.put(ModelElement.MOUNTAIN, 10);
-    config.put(ModelElement.ROCK, 15);
-    config.put(ModelElement.MOTORIZEDFIREFIGHTER, 5);
-    controller.initialize(BOX_WIDTH, BOX_HEIGHT, COLUMN_COUNT, ROW_COUNT,config);
+    Map<ModelElement, Integer> config1 = new HashMap<>();
+    Map<ModelElement, Integer> config2 = new HashMap<>();
+    config1.put(ModelElement.FIRE, 6);
+    config1.put(ModelElement.FIREFIGHTER, 10);
+    config1.put(ModelElement.CLOUD, 6);
+    config1.put(ModelElement.MOUNTAIN, 10);
+    config1.put(ModelElement.ROCK, 15);
+    config1.put(ModelElement.MOTORIZEDFIREFIGHTER, 5);
+    config2.put(ModelElement.VIRUS, 5);
+    config2.put(ModelElement.DOCTOR, 3);
+    config2.put(ModelElement.PERSON, 40);
+    controller.initialize(BOX_WIDTH, BOX_HEIGHT, COLUMN_COUNT, ROW_COUNT,config2);
   }
 
   private void showScene() {

@@ -1,17 +1,30 @@
 package model;
 
 import util.Position;
+import util.TargetStrategy;
+
 import java.util.List;
+import java.util.Set;
 
 public class Virus extends AbstractAgent {
-
+    private final TargetStrategy strategy = new TargetStrategy();
     public Virus(Position position) {
         super(position);
     }
 
     @Override
     public void update(BoardContext context) {
-        if (context.stepNumber() % 2 == 0) {
+        Set<Position> targets = context.getPositions(ModelElement.PERSON);
+        Position nextPos = strategy.neighborClosestToFire(
+                this.position,
+                targets,
+                context.getNeighborsMap()
+        );
+        if (!nextPos.equals(this.position) && !context.isOccupied(nextPos)) {
+            this.position = nextPos;
+        }
+
+
             List<Position> neighbors = context.getNeighbors(this.position);
             for (Position neighbor : neighbors) {
                 List<ModelElement> content = context.getState(neighbor);
@@ -19,7 +32,7 @@ public class Virus extends AbstractAgent {
                     context.kill(ModelElement.PERSON,neighbor);
                     context.spawn(ModelElement.VIRUS, neighbor);
                 }
-            }
+
         }
     }
 
