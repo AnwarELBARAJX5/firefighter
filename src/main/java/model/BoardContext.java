@@ -10,8 +10,8 @@ public interface BoardContext {
 	List<Position> getNeighbors(Position p);
 	public Map<Position, List<Position>> getNeighborsMap() ;
 	Set<Position> getFirePositions();
-	public void extinguish(Position position);
-	public void  createFire(Position position);
+	public void kill(Position position);
+	public void  spawn(Position position);
 	public int rowCount();
 	public int columnCount();
 	public Position randomPosition();

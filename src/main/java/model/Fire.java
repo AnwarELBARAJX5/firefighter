@@ -18,7 +18,7 @@ public class Fire extends AbstractAgent {
         if (context.stepNumber() % 2 == 0) {
             List<Position> myNeighbours = context.getNeighbors(position);
             for (Position neighborsPos : myNeighbours) {
-                context.createFire(neighborsPos);
+                context.spawn(neighborsPos);
             }
 
         }

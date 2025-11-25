@@ -130,7 +130,7 @@ public abstract class AbstractBoard implements Board<List<ModelElement>>,BoardCo
     }
 
     @Override
-    public void extinguish(Position position) {
+    public void kill(Position position) {
         for (AbstractAgent agent : agents) {
             if (agent.getPosition().equals(position) && agent instanceof Fire) {
                 agentsToRemove.add(agent);
@@ -139,7 +139,7 @@ public abstract class AbstractBoard implements Board<List<ModelElement>>,BoardCo
     }
 
     @Override
-    public void createFire(Position position) {
+    public void spawn(Position position) {
         if (firePositions.contains(position) || fireToCreate.contains(position)) {
             return;
         }

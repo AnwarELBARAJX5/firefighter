@@ -22,11 +22,11 @@ public class FireFighter extends AbstractAgent{
         } else {
             this.position = newFirefighterPosition ;
         }
-        context.extinguish(this.position);
+        context.kill(this.position);
         List<Position> neighbors=context.getNeighbors(this.position);
         for(Position neighborsPos:neighbors){
             if(context.getFirePositions().contains(neighborsPos)){
-                context.extinguish(neighborsPos);
+                context.kill(neighborsPos);
             }
         }
     }
