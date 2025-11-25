@@ -14,16 +14,10 @@ public class Person extends AbstractAgent{
     public void update(BoardContext context) {
         List<Position> neighbors = context.getNeighbors(this.position);
         if (!neighbors.isEmpty()) {
-            this.position = neighbors.get(randomNumbers.nextInt(neighbors.size()));
-        }
-        List<Position> newNeighbors = context.getNeighbors(this.position);
-        for(Position neighborPos : newNeighbors){
-            if(context.getFirePositions().contains(neighborPos)){
-                context.kill(neighborPos);
+            Position target = neighbors.get(randomNumbers.nextInt(neighbors.size()));
+            if (!context.isOccupied(target)) {
+                this.position = target;
             }
-        }
-        if(context.getFirePositions().contains(this.position)){
-            context.kill(this.position);
         }
     }
 
