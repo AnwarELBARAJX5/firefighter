@@ -142,13 +142,10 @@ public class Controller {
   public void initialize(int squareWidth, int squareHeight, int columnCount,
                          int rowCount, Map<ModelElement, Integer> initialConfig) {
     this.grid = new view.HexagonalGrid();
-    // Pour remettre en carré plus tard : this.grid = new view.SquareGrid();
     grid.setDimensions(columnCount, rowCount, squareWidth, squareHeight);
     gridContainer.getChildren().clear();
     gridContainer.getChildren().add(grid);
 
-    // 3. CHOIX DU MODÈLE (HexagonalBoard)
-    // Vous l'avez déjà fait, c'est parfait !
     this.setModel(new model.HexagonalBoard(columnCount, rowCount, initialConfig));
 
     repaintGrid();
