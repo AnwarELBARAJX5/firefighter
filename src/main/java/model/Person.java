@@ -28,6 +28,6 @@ public class Person extends AbstractAgent{
 
     @Override
     public boolean isBlocking() {
-        return false;
+        return true;
     }
 }
