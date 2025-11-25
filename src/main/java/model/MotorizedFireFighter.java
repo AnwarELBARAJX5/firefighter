@@ -31,11 +31,11 @@ public class MotorizedFireFighter extends AbstractAgent{
         if (!target.equals(this.position) && !context.isOccupied(target)) {
             this.position = target;
         }
-        context.kill(this.position);
+        context.kill(ModelElement.FIRE,this.position);
         List<Position> neighbors = context.getNeighbors(this.position);
         for (Position neighbor : neighbors) {
             if (context.getFirePositions().contains(neighbor)) {
-                context.kill(neighbor);
+                context.kill(ModelElement.FIRE,neighbor);
             }
         }
     }

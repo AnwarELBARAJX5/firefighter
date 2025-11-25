@@ -29,11 +29,11 @@ public class Cloud extends AbstractAgent{
         List<Position> newNeighbors = context.getNeighbors(this.position);
         for(Position neighborPos : newNeighbors){
             if(context.getFirePositions().contains(neighborPos)){
-                context.kill(neighborPos);
+                context.kill(ModelElement.FIRE,neighborPos);
             }
         }
         if(context.getFirePositions().contains(this.position)){
-            context.kill(this.position);
+            context.kill(ModelElement.FIRE,this.position);
         }
     }
 }

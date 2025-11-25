@@ -19,7 +19,7 @@ public class Mountain extends AbstractSurface{
     }
 
     @Override
-    public boolean tryToIgnite() {
+    public boolean canAccept(ModelElement type) {
         return false;
     }
 }

@@ -23,12 +23,14 @@ public class Rock extends AbstractSurface{
     }
 
     @Override
-    public boolean tryToIgnite() {
-        if(resistance>0){
-            resistance--;
-            return false;
-        }else{
+    public boolean canAccept(ModelElement type) {
+        if (type == ModelElement.FIRE) {
+            if (resistance > 0) {
+                resistance--;
+                return false;
+            }
             return true;
         }
+        return true;
     }
 }

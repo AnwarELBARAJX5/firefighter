@@ -130,32 +130,36 @@ public abstract class AbstractBoard implements Board<List<ModelElement>>,BoardCo
     }
 
     @Override
-    public void kill(Position position) {
+    public void kill(ModelElement type, Position position) {
+        // On ne supprime QUE l'agent du type demandé à cet endroit
         for (AbstractAgent agent : agents) {
-            if (agent.getPosition().equals(position) && agent instanceof Fire) {
+            if (agent.getPosition().equals(position) && agent.getType() == type) {
                 agentsToRemove.add(agent);
             }
         }
     }
 
     @Override
-    public void spawn(Position position) {
-        if (firePositions.contains(position) || fireToCreate.contains(position)) {
-            return;
+    public void spawn(ModelElement type, Position position) {
+        for (AbstractAgent a : agentsToAdd) {
+            if (a.getPosition().equals(position) && a.getType() == type) return;
         }
-
-        boolean canIgnite = true;
+        for (AbstractAgent a : agents) {
+            if (a.getPosition().equals(position) && a.getType() == type) return;
+        }
         for (AbstractSurface surface : surfaces) {
             if (surface.getPosition().equals(position)) {
-                canIgnite = surface.tryToIgnite();
+                if (!surface.canAccept(type)) {
+                    return;
+                }
                 break;
             }
         }
 
-        if (canIgnite) {
-            AbstractAgent newFire = (AbstractAgent) ElementFactory.create(ModelElement.FIRE, position);
-            agentsToAdd.add(newFire);
-            fireToCreate.add(position);
+        // 3. Création et Ajout (inchangé)
+        Element e = ElementFactory.create(type, position);
+        if (e instanceof AbstractAgent agent) {
+            agentsToAdd.add(agent);
         }
     }
 
@@ -218,6 +222,17 @@ public abstract class AbstractBoard implements Board<List<ModelElement>>,BoardCo
             }
         }
         return false;
+    }
+    @Override
+    public Set<Position> getPositions(ModelElement type) {
+        Set<Position> positions = new HashSet<>();
+        for (AbstractAgent agent : agents) {
+            if (agent.getType() == type) {
+                positions.add(agent.getPosition());
+            }
+        }
+
+        return positions;
     }
     public abstract void initializeNeighbors();
 }
