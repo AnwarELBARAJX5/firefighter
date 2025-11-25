@@ -19,6 +19,7 @@ import view.Grid;
 import view.ViewElement;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -83,28 +84,19 @@ public class Controller {
   }
 
   private ViewElement getViewElement(List<ModelElement> squareState) {
-    if(squareState.contains(ModelElement.FIREFIGHTER)){
-      return ViewElement.FIREFIGHTER;
+    if (squareState.isEmpty()) {
+      return ViewElement.EMPTY;
     }
-    if (squareState.contains(ModelElement.FIRE)){
-      return ViewElement.FIRE;
+    ModelElement bestElement = null;
+    int maxPriority = -1;
+
+    for (ModelElement element : squareState) {
+      if (bestElement == null || element.getPriority() > maxPriority) {
+        bestElement = element;
+        maxPriority = element.getPriority();
+      }
     }
-    if (squareState.contains(ModelElement.CLOUD)){
-      return ViewElement.CLOUD;
-    }
-    if(squareState.contains(ModelElement.MOTORIZEDFIREFIGHTER)){
-      return ViewElement.MOTORIZEDFIREFIGHTER;
-    }
-    if(squareState.contains(ModelElement.MOUNTAIN)){
-      return ViewElement.MOUNTAIN;
-    }
-    if(squareState.contains(ModelElement.ROAD)){
-      return ViewElement.ROAD;
-    }
-    if(squareState.contains(ModelElement.ROCK)){
-      return ViewElement.ROCK;
-    }
-    return ViewElement.EMPTY;
+    return bestElement.getView();
   }
 
   private void initializeTimeline() {
