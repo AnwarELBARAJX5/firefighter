@@ -3,10 +3,7 @@ package view;
 import javafx.scene.paint.Color;
 
 public class HexagonalGrid extends AbstractGrid {
-
-    // Espace en pixels entre chaque hexagone
     private static final double GAP = 4.0;
-
     @Override
     protected void paintBox(int row, int column, Color color) {
         getGraphicsContext2D().setFill(color);

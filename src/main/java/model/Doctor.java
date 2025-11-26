@@ -30,7 +30,7 @@ public class Doctor extends AbstractAgent {
 
         List<ModelElement> contentOnCase = context.getState(this.position);
 
-        if (contentOnCase.contains(ModelElement.VIRUS) && randomNumbers.nextDouble()<0.5 ) {
+        if (contentOnCase.contains(ModelElement.VIRUS) && randomNumbers.nextDouble()<0.7 ) {
             context.kill(ModelElement.VIRUS, this.position);
             context.spawn(ModelElement.DOCTOR,lastPos);
 

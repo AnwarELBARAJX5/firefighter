@@ -52,7 +52,7 @@ public class SimulatorApplication extends javafx.application.Application {
     config1.put(ModelElement.ROCK, 15);
     config1.put(ModelElement.MOTORIZEDFIREFIGHTER, 5);
     config2.put(ModelElement.VIRUS, 1);
-    config2.put(ModelElement.DOCTOR, 4);
+    config2.put(ModelElement.DOCTOR, 10);
     config2.put(ModelElement.PERSON, 60);
     controller.initialize(BOX_WIDTH, BOX_HEIGHT, COLUMN_COUNT, ROW_COUNT,config2);
   }

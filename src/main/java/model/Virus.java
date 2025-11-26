@@ -33,7 +33,7 @@ public class Virus extends AbstractAgent {
                 if (content.contains(ModelElement.PERSON)) {
                     context.kill(ModelElement.PERSON,neighbor);
                     context.spawn(ModelElement.VIRUS, neighbor);
-                }else if (content.contains(ModelElement.DOCTOR) && randomNumber.nextDouble()<0.15) {
+                }else if (content.contains(ModelElement.DOCTOR) && randomNumber.nextDouble()<0.1) {
                     context.kill(ModelElement.DOCTOR, neighbor);
                     context.spawn(ModelElement.PERSON, neighbor);
                 }
