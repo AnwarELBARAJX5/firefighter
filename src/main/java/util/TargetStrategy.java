@@ -20,7 +20,7 @@ public class TargetStrategy {
                 return firstMove.get(current);
             for (Position adjacent : neighbors.get(current)) {
                 if (seen.contains(adjacent)) continue;
-                toVisit.add(adjacent); //changement a faire quand on implémente montagne
+                toVisit.add(adjacent);
                 seen.add(adjacent);
                 firstMove.put(adjacent, firstMove.get(current));
             }
