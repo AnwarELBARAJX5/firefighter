@@ -4,10 +4,12 @@ import util.Position;
 import util.TargetStrategy;
 
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 public class Virus extends AbstractAgent {
     private final TargetStrategy strategy = new TargetStrategy();
+    Random randomNumber=new Random();
     public Virus(Position position) {
         super(position);
     }
@@ -31,6 +33,9 @@ public class Virus extends AbstractAgent {
                 if (content.contains(ModelElement.PERSON)) {
                     context.kill(ModelElement.PERSON,neighbor);
                     context.spawn(ModelElement.VIRUS, neighbor);
+                }else if (content.contains(ModelElement.DOCTOR) && randomNumber.nextDouble()<0.15) {
+                    context.kill(ModelElement.DOCTOR, neighbor);
+                    context.spawn(ModelElement.PERSON, neighbor);
                 }
 
         }
