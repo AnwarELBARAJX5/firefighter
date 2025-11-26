@@ -14,8 +14,6 @@ public abstract class AbstractBoard implements Board<List<ModelElement>>,BoardCo
     private final List<AbstractSurface> surfaces = new ArrayList<>();
     private final List<AbstractAgent> agentsToAdd = new ArrayList<>();
     private final List<AbstractAgent> agentsToRemove = new ArrayList<>();
-    private final Set<Position> firePositions = new HashSet<>();
-    private final Set<Position> fireToCreate = new HashSet<>();
     Map<Position, List<Position>> neighbors = new HashMap();
     final Position[][] positions;
     private int step = 0;
@@ -34,7 +32,7 @@ public abstract class AbstractBoard implements Board<List<ModelElement>>,BoardCo
     }
     public void initializeElements() {
         agents.clear();
-        firePositions.clear();
+
         surfaces.clear();
         for (Map.Entry<ModelElement, Integer> entry : initialConfig.entrySet()) {
             ModelElement type = entry.getKey();
@@ -52,9 +50,6 @@ public abstract class AbstractBoard implements Board<List<ModelElement>>,BoardCo
     }
     private void addAgent(AbstractAgent agent) {
         agents.add(agent);
-        if (agent instanceof Fire) {
-            firePositions.add(agent.getPosition());
-        }
     }
     private void addSurface(AbstractSurface surface){
         surfaces.add(surface);
@@ -90,7 +85,6 @@ public abstract class AbstractBoard implements Board<List<ModelElement>>,BoardCo
 
     public List<Position> updateToNextGeneration() {
         List<Position> modifiedPositions = new ArrayList<>();
-        fireToCreate.clear();
         agentsToAdd.clear();
         agentsToRemove.clear();
         for (AbstractAgent agent : agents) {
@@ -103,10 +97,6 @@ public abstract class AbstractBoard implements Board<List<ModelElement>>,BoardCo
         }
         agents.removeAll(agentsToRemove);
         agents.addAll(agentsToAdd);
-        firePositions.clear();
-        for (Element agent : agents) {
-            if (agent instanceof Fire) firePositions.add(agent.getPosition());
-        }
         for (AbstractAgent a : agentsToAdd) modifiedPositions.add(a.getPosition());
         for (AbstractAgent a : agentsToRemove) modifiedPositions.add(a.getPosition());
         step++;
@@ -162,7 +152,6 @@ public abstract class AbstractBoard implements Board<List<ModelElement>>,BoardCo
     public void setState(List<ModelElement> state, Position position) {
         agents.removeIf(a -> a.getPosition().equals(position));
         surfaces.removeIf(s -> s.getPosition().equals(position));
-        firePositions.remove(position);
         for (ModelElement type : state) {
             Element element = ElementFactory.create(type, position);
             if (element instanceof AbstractAgent agent) {
@@ -205,7 +194,7 @@ public abstract class AbstractBoard implements Board<List<ModelElement>>,BoardCo
 
     @Override
     public Set<Position> getFirePositions() {
-        return new HashSet<>(firePositions);
+        return getPositions(ModelElement.FIRE);
     }
 
     @Override
