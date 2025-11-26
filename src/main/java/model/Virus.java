@@ -48,6 +48,6 @@ public class Virus extends AbstractAgent {
 
     @Override
     public boolean isBlocking() {
-        return false; // On peut marcher sur un virus (pour le soigner)
+        return false; // On peut marcher sur un virus (pour le soigner).
     }
 }

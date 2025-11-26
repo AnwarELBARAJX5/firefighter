@@ -16,7 +16,6 @@ public class ElementFactory {
             case VIRUS ->new Virus(position);
             case PERSON ->new Person(position);
             case DOCTOR ->new Doctor(position);
-            default -> null;
         };
     }
 }

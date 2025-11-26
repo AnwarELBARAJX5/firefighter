@@ -6,15 +6,15 @@ import java.util.*;
 
 
 public interface BoardContext {
-	public int stepNumber();
+	int stepNumber();
 	List<Position> getNeighbors(Position p);
-	public Map<Position, List<Position>> getNeighborsMap() ;
+	Map<Position, List<Position>> getNeighborsMap() ;
 	Set<Position> getFirePositions();
-	public void kill(ModelElement type,Position position);
-	public void  spawn(ModelElement type,Position position);
-	public int rowCount();
-	public int columnCount();
-	public Position randomPosition();
+	void kill(ModelElement type,Position position);
+	void  spawn(ModelElement type,Position position);
+	int rowCount();
+	int columnCount();
+	Position randomPosition();
 	boolean isOccupied(Position position);
 	List<ModelElement> getState(Position position);
 	Set<Position> getPositions(ModelElement type);

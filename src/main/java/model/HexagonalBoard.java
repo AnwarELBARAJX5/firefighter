@@ -2,9 +2,7 @@ package model;
 
 import java.util.List;
 import util.Position;
-import util.TargetStrategy;
 import java.util.*;
-import java.util.stream.Collectors;
 public class HexagonalBoard extends AbstractBoard{
     public HexagonalBoard(int columnCount, int rowCount, Map<ModelElement, Integer> config) {
         super(columnCount, rowCount, config);

@@ -15,11 +15,9 @@ import javafx.util.Pair;
 import model.*;
 import util.Position;
 import view.AbstractGrid;
-import view.Grid;
 import view.ViewElement;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -132,14 +130,21 @@ public class Controller {
   }
 
   public void initialize(int squareWidth, int squareHeight, int columnCount,
-                         int rowCount, Map<ModelElement, Integer> initialConfig) {
-    this.grid = new view.HexagonalGrid();
+                         int rowCount, Map<ModelElement, Integer> initialConfig,boolean useHexagonal) {
+    if (useHexagonal) {
+      this.grid = new view.HexagonalGrid();
+    } else {
+      this.grid = new view.SquareGrid();
+    }
     grid.setDimensions(columnCount, rowCount, squareWidth, squareHeight);
     gridContainer.getChildren().clear();
     gridContainer.getChildren().add(grid);
 
-    this.setModel(new model.HexagonalBoard(columnCount, rowCount, initialConfig));
-
+    if (useHexagonal) {
+      this.setModel(new model.HexagonalBoard(columnCount, rowCount, initialConfig));
+    } else {
+      this.setModel(new model.GridBoard(columnCount, rowCount, initialConfig));
+    }
     repaintGrid();
   }
   public void oneStepButtonAction() {

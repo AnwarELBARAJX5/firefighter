@@ -1,15 +1,7 @@
 package model;
 
 import java.util.*;
-
-
 import util.Position;
-import util.TargetStrategy;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import static view.ViewElement.MOTORIZEDFIREFIGHTER;
-
 
 public class GridBoard extends AbstractBoard{
     public GridBoard(int columnCount, int rowCount, Map<ModelElement, Integer> config) {

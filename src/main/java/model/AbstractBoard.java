@@ -2,16 +2,14 @@ package model;
 
 import java.util.List;
 import util.Position;
-import util.TargetStrategy;
 import java.util.*;
 import java.util.stream.Collectors;
-import static view.ViewElement.MOTORIZEDFIREFIGHTER;
 
 
 public abstract class AbstractBoard implements Board<List<ModelElement>>,BoardContext{
     final int columnCount;
     final int rowCount;
-    private  Map<ModelElement, Integer> initialConfig=new HashMap<>();
+    private final Map<ModelElement, Integer> initialConfig;
     private final List<AbstractAgent> agents = new ArrayList<>();
     private final List<AbstractSurface> surfaces = new ArrayList<>();
     private final List<AbstractAgent> agentsToAdd = new ArrayList<>();
@@ -131,7 +129,6 @@ public abstract class AbstractBoard implements Board<List<ModelElement>>,BoardCo
 
     @Override
     public void kill(ModelElement type, Position position) {
-        // On ne supprime QUE l'agent du type demandé à cet endroit
         for (AbstractAgent agent : agents) {
             if (agent.getPosition().equals(position) && agent.getType() == type) {
                 agentsToRemove.add(agent);
@@ -155,8 +152,6 @@ public abstract class AbstractBoard implements Board<List<ModelElement>>,BoardCo
                 break;
             }
         }
-
-        // 3. Création et Ajout (inchangé)
         Element e = ElementFactory.create(type, position);
         if (e instanceof AbstractAgent agent) {
             agentsToAdd.add(agent);

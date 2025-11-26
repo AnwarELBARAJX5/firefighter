@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class SimulatorApplication extends javafx.application.Application {
   private static final String VIEW_RESOURCE_PATH = "/view/view.fxml";
@@ -20,6 +21,8 @@ public class SimulatorApplication extends javafx.application.Application {
   private static final int COLUMN_COUNT = 20;
   private static final int BOX_WIDTH = 30;
   private static final int BOX_HEIGHT = 30;
+  private static final Map<ModelElement, Integer> userConfig = new HashMap<>();
+  private static boolean useHexagonal = false;
   private Stage primaryStage;
   private Parent view;
   private void initializePrimaryStage(Stage primaryStage) {
@@ -43,18 +46,7 @@ public class SimulatorApplication extends javafx.application.Application {
     loader.setLocation(location);
     view = loader.load();
     Controller controller = loader.getController();
-    Map<ModelElement, Integer> config1 = new HashMap<>();
-    Map<ModelElement, Integer> config2 = new HashMap<>();
-    config1.put(ModelElement.FIRE, 6);
-    config1.put(ModelElement.FIREFIGHTER, 10);
-    config1.put(ModelElement.CLOUD, 6);
-    config1.put(ModelElement.MOUNTAIN, 10);
-    config1.put(ModelElement.ROCK, 15);
-    config1.put(ModelElement.MOTORIZEDFIREFIGHTER, 5);
-    config2.put(ModelElement.VIRUS, 1);
-    config2.put(ModelElement.DOCTOR, 10);
-    config2.put(ModelElement.PERSON, 60);
-    controller.initialize(BOX_WIDTH, BOX_HEIGHT, COLUMN_COUNT, ROW_COUNT,config2);
+    controller.initialize(BOX_WIDTH, BOX_HEIGHT, COLUMN_COUNT, ROW_COUNT,userConfig, useHexagonal);
   }
 
   private void showScene() {
@@ -64,6 +56,54 @@ public class SimulatorApplication extends javafx.application.Application {
   }
 
   public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+
+    System.out.println("==================================");
+    System.out.println("   SIMULATEUR - MENU PRINCIPAL    ");
+    System.out.println("==================================");
+
+
+    System.out.println("\n---> Quelle Grille voulez-vous ?");
+    System.out.println("1. Grille Carrée (Classique)");
+    System.out.println("2. Grille Hexagonale (Moderne)");
+    System.out.print("Votre choix (1 ou 2) : ");
+    int gridChoice = askInt(scanner,"");
+    useHexagonal = (gridChoice == 2);
+
+    System.out.println("\n---> Quel Scénario voulez-vous jouer ?");
+    System.out.println("1. Pompiers vs Feu");
+    System.out.println("2. Pandémie (Virus)");
+    System.out.print("Votre choix (1 ou 2) : ");
+    int gameChoice = askInt(scanner," ");
+
+    if (gameChoice == 1) {
+      System.out.println("\n--- CONFIGURATION POMPIERS ---");
+      userConfig.put(ModelElement.FIRE, askInt(scanner, "Nombre de Feux "));
+      userConfig.put(ModelElement.FIREFIGHTER, askInt(scanner, "Nombre de Pompiers "));
+      userConfig.put(ModelElement.MOTORIZEDFIREFIGHTER, askInt(scanner, "Nombre de Pompiers Motorisés "));
+      userConfig.put(ModelElement.CLOUD, askInt(scanner, "Nombre de Nuages "));
+      userConfig.put(ModelElement.ROCK, askInt(scanner, "Nombre de Rochers "));
+      userConfig.put(ModelElement.MOUNTAIN, askInt(scanner, "Nombre de Montagnes "));
+      userConfig.put(ModelElement.ROAD, askInt(scanner, "Nombre de Routes "));
+
+      System.out.println("Lancement de la simulation Pompiers...");
+
+    } else {
+      System.out.println("\n--- CONFIGURATION VIRUS ---");
+      userConfig.put(ModelElement.VIRUS, askInt(scanner, "Nombre de Virus initiaux "));
+      userConfig.put(ModelElement.PERSON, askInt(scanner, "Population initiale "));
+      userConfig.put(ModelElement.DOCTOR, askInt(scanner, "Nombre de Médecins "));
+      System.out.println("Lancement de la simulation Virus...");
+    }
     launch(args);
   }
+  private static int askInt(Scanner s, String message) {
+    System.out.print(message + " : ");
+    while (!s.hasNextInt()) {
+      s.next();
+      System.out.print("Erreur. " + message );
+    }
+    return s.nextInt();
+  }
 }
+

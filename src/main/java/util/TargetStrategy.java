@@ -1,11 +1,6 @@
 package util;
-
-import util.Position;
-
 import java.util.*;
-
 public class TargetStrategy {
-
 
     /**
      * @param position current position.

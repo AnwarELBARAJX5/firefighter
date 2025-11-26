@@ -23,9 +23,6 @@ public class Road extends AbstractSurface{
 
     @Override
     public boolean canAccept(ModelElement type) {
-        if (type == ModelElement.FIRE) {
-            return false;
-        }
-        return true;
+        return type != ModelElement.FIRE;
     }
 }

@@ -1,6 +1,5 @@
 package model;
 
-import model.BoardContext;
 import util.Position;
 
 
