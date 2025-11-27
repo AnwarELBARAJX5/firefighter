@@ -72,7 +72,6 @@ public abstract class AbstractGrid extends Canvas implements Grid<ViewElement> {
         super.setHeight(boxHeight * rowCount);
     }
 
-     abstract void paintLines();
      void paintVerticalLines() {
         for(int column = 0; column < columnCount; column++)
             getGraphicsContext2D().strokeLine(column * boxWidth, 0,column * boxWidth, getHeight());
@@ -85,8 +84,14 @@ public abstract class AbstractGrid extends Canvas implements Grid<ViewElement> {
 
 
 
-     void clearBox(int row, int column){
-        getGraphicsContext2D().clearRect(column * boxWidth,row * boxHeight, boxWidth, boxHeight);
+
+
+    void paintLines() {
+    }
+
+
+    void clearBox(int row, int column) {
     }
     abstract void paintBox(int row, int column, Color color);
+
 }

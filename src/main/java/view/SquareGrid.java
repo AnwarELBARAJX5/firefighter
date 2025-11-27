@@ -15,5 +15,9 @@ public class SquareGrid extends AbstractGrid{
         getGraphicsContext2D().setFill(color);
         getGraphicsContext2D().fillRect(column * boxWidth, row * boxHeight, boxWidth, boxHeight);
     }
+    @Override
+    void clearBox(int row, int column){
+        getGraphicsContext2D().clearRect(column * boxWidth,row * boxHeight, boxWidth, boxHeight);
+    }
 
 }
