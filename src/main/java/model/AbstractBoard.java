@@ -193,11 +193,6 @@ public abstract class AbstractBoard implements Board<List<ModelElement>>,BoardCo
 
 
     @Override
-    public Set<Position> getFirePositions() {
-        return getPositions(ModelElement.FIRE);
-    }
-
-    @Override
     public boolean isOccupied(Position position) {
         for (AbstractAgent agent : agents) {
             if (agent.getPosition().equals(position)&&agent.isBlocking()) {

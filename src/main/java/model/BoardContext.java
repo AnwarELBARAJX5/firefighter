@@ -9,7 +9,6 @@ public interface BoardContext {
 	int stepNumber();
 	List<Position> getNeighbors(Position p);
 	Map<Position, List<Position>> getNeighborsMap() ;
-	Set<Position> getFirePositions();
 	void kill(ModelElement type,Position position);
 	void  spawn(ModelElement type,Position position);
 	int rowCount();

@@ -25,7 +25,7 @@ public class MotorizedFireFighter extends AbstractAgent{
     private void step(BoardContext context) {
         Position target = targetStrategy.neighborClosestToFire(
                 this.position,
-                context.getFirePositions(),
+                context.getPositions(ModelElement.FIRE),
                 context.getNeighborsMap()
         );
         if (!target.equals(this.position) && !context.isOccupied(target)) {
@@ -34,7 +34,7 @@ public class MotorizedFireFighter extends AbstractAgent{
         context.kill(ModelElement.FIRE,this.position);
         List<Position> neighbors = context.getNeighbors(this.position);
         for (Position neighbor : neighbors) {
-            if (context.getFirePositions().contains(neighbor)) {
+            if (context.getPositions(ModelElement.FIRE).contains(neighbor)) {
                 context.kill(ModelElement.FIRE,neighbor);
             }
         }

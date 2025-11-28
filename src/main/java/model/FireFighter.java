@@ -17,7 +17,7 @@ public class FireFighter extends AbstractAgent{
 
     @Override
     public void update(BoardContext context) {
-        Position newFirefighterPosition = targetStrategy.neighborClosestToFire(this.position,context.getFirePositions(), context.getNeighborsMap());
+        Position newFirefighterPosition = targetStrategy.neighborClosestToFire(this.position,context.getPositions(ModelElement.FIRE), context.getNeighborsMap());
         if (!newFirefighterPosition .equals(this.position) && context.isOccupied(newFirefighterPosition )) {
         } else {
             this.position = newFirefighterPosition ;
@@ -25,9 +25,8 @@ public class FireFighter extends AbstractAgent{
         context.kill(ModelElement.FIRE,this.position);
         List<Position> neighbors=context.getNeighbors(this.position);
         for(Position neighborsPos:neighbors){
-            if(context.getFirePositions().contains(neighborsPos)){
                 context.kill(ModelElement.FIRE,neighborsPos);
-            }
+
         }
     }
 
