@@ -1,7 +1,7 @@
 package view;
 
 import javafx.scene.paint.Color;
-
+//CODE trouvé  sur internet https://gist.github.com/salamander2/4329783
 public class HexagonalGrid extends AbstractGrid {
     private static final double GAP = 4.0;
     @Override
@@ -49,11 +49,5 @@ public class HexagonalGrid extends AbstractGrid {
         super.setHeight(boxHeight * (1 + (rowCount - 1) * 0.75));
     }
 
-    @Override
-    public void paintLines() {
-    }
 
-    @Override
-    protected void clearBox(int row, int column) {
-    }
 }

@@ -101,7 +101,7 @@ public class SimulatorApplication extends javafx.application.Application {
     System.out.print(message + " : ");
     while (!s.hasNextInt()) {
       s.next();
-      System.out.print("Erreur. " + message );
+      System.out.print("Erreur " + message );
     }
     return s.nextInt();
   }
